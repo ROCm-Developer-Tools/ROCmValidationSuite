@@ -82,7 +82,7 @@ This section explains how to get and compile current development stream of RVS.
      cmake  -DROCM_PATH=<rocm_installed_path> -DCMAKE_INSTALL_PREFIX=<rocm_installed_path> -DCMAKE_PACKAGING_INSTALL_PREFIX=<rocm_installed_path> ./ -B./build
      
      eg/-
-     cmake -DROCM_PATH=/opt/rocm-4.0.0-6220 -DCMAKE_INSTALL_PREFIX=/opt/rocm-4.0.0-6220 -DCMAKE_PACKAGING_INSTALL_PREFIX=/opt/rocm-4.0.0-6220 ./ -B./build
+     cmake -DROCM_PATH=/opt/rocm-4.0.0 -DCMAKE_INSTALL_PREFIX=/opt/rocm-4.0.0 -DCMAKE_PACKAGING_INSTALL_PREFIX=/opt/rocm-4.0.0 ./ -B./build
      
      make -C ./build
      
@@ -90,7 +90,7 @@ If OS is CentOS and RHEL, use cmake3
 
     cmake3  -DROCM_PATH=<rocm_installed_path> -DCMAKE_INSTALL_PREFIX=<rocm_installed_path> -DCMAKE_PACKAGING_INSTALL_PREFIX=<rocm_installed_path> ./ -B./build
     eg/-
-    cmake3 -DROCM_PATH=/opt/rocm-4.0.0-6220 -DCMAKE_INSTALL_PREFIX=/opt/rocm-4.0.0-6220 -DCMAKE_PACKAGING_INSTALL_PREFIX=/opt/rocm-4.0.0-6220 ./ -B./build
+    cmake3 -DROCM_PATH=/opt/rocm-4.0.0 -DCMAKE_INSTALL_PREFIX=/opt/rocm-4.0.0 -DCMAKE_PACKAGING_INSTALL_PREFIX=/opt/rocm-4.0.0 ./ -B./build
  
     make -C ./build
 
@@ -123,8 +123,10 @@ Please make sure Prerequisites, ROCm stack, rocblas and rocm-smi-lib64 are alrea
 
 ### Running version pre-complied and packaged with ROCm release
    
-    sudo /opt/rocm/rvs/rvs -d 3
-    sudo /opt/rocm/rvs/rvsqa.new.sh 
+    sudo <rocm_installed_folder>/rvs/rvs -d 3
+    eg/- sudo /opt/rocm-4.0.0/rvs/rvs -d 3
+    sudo <rocm_installed_folder>/rvs/rvsqa.new.sh
+    eg/- sudo /opt/rocm-4.0.0/rvs/rvsqa.new.sh 
    
 Similarly, you can run all tests as mentioned in "rvsqa.new.sh" script, present at "testscripts/rvsqa.new.sh"
 
