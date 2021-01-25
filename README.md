@@ -79,7 +79,10 @@ This section explains how to get and compile current development stream of RVS.
     cd ROCmValidationSuite
  If OS is Ubuntu and SLES, use cmake
     
-     cmake ./ -B./build
+     cmake  -DROCM_PATH=<rocm_installed_path> -DCMAKE_INSTALL_PREFIX=<rocm_installed_path> -DCMAKE_PACKAGING_INSTALL_PREFIX=<rocm_installed_path> ./ -B./build
+     
+     eg/-
+     cmake -DROCM_PATH=/opt/rocm-4.0.0-6220 -DCMAKE_INSTALL_PREFIX=/opt/rocm-4.0.0-6220 -DCMAKE_PACKAGING_INSTALL_PREFIX=/opt/rocm-4.0.0-6220 ./ -B./build
      
      make -C ./build
      
