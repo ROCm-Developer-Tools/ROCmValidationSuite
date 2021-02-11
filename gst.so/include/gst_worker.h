@@ -104,6 +104,12 @@ class GSTWorker : public rvs::ThreadBase {
     //! returns the copy_matrix value
     bool get_copy_matrix(void) { return copy_matrix; }
 
+    //! sets the trig_init (true = the matrix will be init with trigonometric values
+    //! , false = matrix will be init with random values
+    void set_trig_init(bool _trig_init) { trig_init = _trig_init; }
+    //! returns the trig_init value
+    bool get_trig_init(void) { return trig_init; }
+
     //! sets the target stress (in GFlops) that the GPU will try to achieve
     void set_target_stress(float _target_stress) {
         target_stress = _target_stress;
@@ -240,6 +246,8 @@ class GSTWorker : public rvs::ThreadBase {
     //! GFlops tolerance (how much the GFlops can fluctuare after
     //! the ramp period for the test to succeed)
     float tolerance;
+    //! if trigonometric values are needed for initializing matrix
+    bool trig_init;
     //! SGEMM matrix size
     uint64_t matrix_size_a;
     uint64_t matrix_size_b;

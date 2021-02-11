@@ -66,6 +66,7 @@ using std::regex;
 #define RVS_CONF_LDA_OFFSET             "lda"
 #define RVS_CONF_LDB_OFFSET             "ldb"
 #define RVS_CONF_LDC_OFFSET             "ldc"
+#define RVS_CONF_TRIG_INIT_KEY          "trig_init"
 
 #define MODULE_NAME                     "gst"
 #define MODULE_NAME_CAPS                "GST"
@@ -84,7 +85,7 @@ using std::regex;
 #define GST_DEFAULT_LDA_OFFSET          0
 #define GST_DEFAULT_LDB_OFFSET          0
 #define GST_DEFAULT_LDC_OFFSET          0
-
+#define GST_DEFAULT_TRIG_INIT           false
 #define RVS_DEFAULT_PARALLEL            false
 #define RVS_DEFAULT_DURATION            0
 
@@ -154,7 +155,7 @@ bool gst_action::do_gpu_stress_test(map<int, uint16_t> gst_gpus_device_index) {
             workers[i].set_lda_offset(gst_lda_offset);
             workers[i].set_ldb_offset(gst_ldb_offset);
             workers[i].set_ldc_offset(gst_ldc_offset);
-            
+            workers[i].set_trig_init(gst_trig_init) 
             i++;
         }
 
@@ -245,6 +246,14 @@ bool gst_action::get_all_gst_config_keys(void) {
       GST_DEFAULT_COPY_MATRIX)) {
         msg = "invalid '" +
         std::string(RVS_CONF_COPY_MATRIX_KEY) + "' key value";
+        rvs::lp::Err(msg, MODULE_NAME_CAPS, action_name);
+        bsts = false;
+    }
+ 
+    if (property_get(RVS_CONF_TRIG_INIT_KEY, &gst_trig_init,
+      GST_DEFAULT_TRIG_INIT)) {
+        msg = "invalid '" +
+        std::string(RVS_CONF_TRIG_INIT_KEY) + "' key value";
         rvs::lp::Err(msg, MODULE_NAME_CAPS, action_name);
         bsts = false;
     }

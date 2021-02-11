@@ -24,13 +24,14 @@
  *******************************************************************************/
 #include "include/rvs_blas.h"
 
-#include <time.h>
+#include <ctime>
 #include <iostream>
-
+#include <cmath>
 #define RANDOM_CT               320000
 #define RANDOM_DIV_CT           0.1234
-
-
+#define PI                      3.14159265
+#define RAD_FIVE                0.0872
+#define RAD_NTY                 1.5708
 /**
  * @brief class constructor
  * @param _gpu_device_index the gpu that will run the GEMM
@@ -504,5 +505,61 @@ float rvs_blas::fast_pseudo_rand(u_long *nextr) {
     *nextr = *nextr * 1103515245 + 12345;
     return static_cast<float>(static_cast<uint32_t>
                     ((*nextr / 65536) % RANDOM_CT)) / RANDOM_DIV_CT;
+}
+
+/**
+ * @brief generate trig matrix data
+ * it should be called before rocBlas GEMM
+ */
+void rvs_blas::generate_trig_matrix_data(void) {
+    if (!is_error) {
+        uint64_t nextr = time(NULL);
+        
+        //SGEMM stuff
+        for (i = 0; i < size_a; ++i)
+            ha[i] = trig_rand(&nextr, true);
+
+        for (i = 0; i < size_b; ++i)
+            hb[i] = trig_rand(&nextr, false);
+
+        for (int i = 0; i < size_c; ++i)
+            hc[i] = trig_rand(&nextr, true);
+
+        //DGEMM stuff
+        for (i = 0; i < size_a; ++i)
+            hdbla[i] = (double)trig_rand(&nextr, true);
+
+        for (i = 0; i < size_b; ++i)
+            hdblb[i] = (double)trig_rand(&nextr, false);
+
+        for (int i = 0; i < size_c; ++i)
+            hdblc[i] = (double)trig_rand(&nextr, true);
+        
+        // HGEMM stuff
+        for (i = 0; i < size_a; ++i)
+            hhlfa[i].data = (uint16_t)trig_rand(&nextr, true);
+
+        for (i = 0; i < size_b; ++i)
+            hhlfb[i].data = (uint16_t)trig_rand(&nextr, false);
+
+        for (int i = 0; i < size_c; ++i)
+            hhlfc[i].data = (uint16_t)trig_rand(&nextr, true);
+    }
+
+}
+
+/**
+ * @brief genertaes a trig value based on long input
+ * @return floating point random trigonometric value	
+ */
+float rvs_blas::trig_rand(u_long *nextr, bool sin) {
+    *nextr = *nextr * 1103515245 + 12345;
+    float temp = static_cast<float>(static_cast<uint32_t>
+                    ((*nextr / 65536) % RANDOM_CT)) / RANDOM_DIV_CT;
+    // ranging between 5 degree(0.0872 radians) and 90 degree(1.5708)
+    float rads = RAD_FIVE + temp * ( RAD_NTY - RAD_FIVE ); 
+    if(sin)
+        return sin(rads);
+    return cos(rads);
 }
 

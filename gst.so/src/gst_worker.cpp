@@ -92,9 +92,12 @@ void GSTWorker::setup_blas(int *error, string *err_description) {
         *err_description = GST_MEM_ALLOC_ERROR;
         return;
     }
-
+    //create trig matrix & copy it to the GPU
+    if(trig_init)
+        gpu_blas->generate_trig_matrix();
     // generate random matrix & copy it to the GPU
-    gpu_blas->generate_random_matrix_data();
+    else
+        gpu_blas->generate_random_matrix_data();
     if (!copy_matrix) {
         // copy matrix only once
         if (!gpu_blas->copy_data_to_gpu(gst_ops_type)) {
@@ -229,7 +232,10 @@ bool GSTWorker::do_gst_ramp(int *error, string *err_description) {
 
         if (copy_matrix) {
             // Genrate random matrix data
-            gpu_blas->generate_random_matrix_data();
+            if(trig_init)
+                gpu_blas->generate_trig_matrix();
+            else
+                gpu_blas->generate_random_matrix_data();
             // copy matrix before each GEMM
             if (!gpu_blas->copy_data_to_gpu(gst_ops_type)) {
                 *error = 1;
