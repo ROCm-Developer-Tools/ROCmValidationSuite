@@ -155,7 +155,7 @@ bool gst_action::do_gpu_stress_test(map<int, uint16_t> gst_gpus_device_index) {
             workers[i].set_lda_offset(gst_lda_offset);
             workers[i].set_ldb_offset(gst_ldb_offset);
             workers[i].set_ldc_offset(gst_ldc_offset);
-            workers[i].set_trig_init(gst_trig_init) 
+            workers[i].set_trig_init(gst_trig_init); 
             i++;
         }
 

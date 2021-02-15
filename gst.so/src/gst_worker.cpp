@@ -93,8 +93,8 @@ void GSTWorker::setup_blas(int *error, string *err_description) {
         return;
     }
     //create trig matrix & copy it to the GPU
-    if(trig_init)
-        gpu_blas->generate_trig_matrix();
+    if(gst_trig_init)
+        gpu_blas->generate_trig_matrix_data();
     // generate random matrix & copy it to the GPU
     else
         gpu_blas->generate_random_matrix_data();
@@ -232,8 +232,8 @@ bool GSTWorker::do_gst_ramp(int *error, string *err_description) {
 
         if (copy_matrix) {
             // Genrate random matrix data
-            if(trig_init)
-                gpu_blas->generate_trig_matrix();
+            if(gst_trig_init)
+                gpu_blas->generate_trig_matrix_data();
             else
                 gpu_blas->generate_random_matrix_data();
             // copy matrix before each GEMM

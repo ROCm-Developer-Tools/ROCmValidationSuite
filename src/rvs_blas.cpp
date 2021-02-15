@@ -512,6 +512,7 @@ float rvs_blas::fast_pseudo_rand(u_long *nextr) {
  * it should be called before rocBlas GEMM
  */
 void rvs_blas::generate_trig_matrix_data(void) {
+    int i;
     if (!is_error) {
         uint64_t nextr = time(NULL);
         
@@ -559,7 +560,7 @@ float rvs_blas::trig_rand(u_long *nextr, bool sin) {
     // ranging between 5 degree(0.0872 radians) and 90 degree(1.5708)
     float rads = RAD_FIVE + temp * ( RAD_NTY - RAD_FIVE ); 
     if(sin)
-        return sin(rads);
+        return std::sin(rads);
     return cos(rads);
 }
 

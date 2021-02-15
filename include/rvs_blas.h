@@ -69,6 +69,7 @@ class rvs_blas {
     //! returns TRUE if an error occured
     bool error(void) { return is_error; }
     void generate_random_matrix_data(void);
+    void generate_trig_matrix_data(void);
     bool copy_data_to_gpu(std::string);
     bool run_blass_gemm(std::string);
     bool is_gemm_op_complete(void);
@@ -167,6 +168,7 @@ class rvs_blas {
     bool alocate_host_matrix_mem(void);
     void release_host_matrix_mem(void);
     float fast_pseudo_rand(u_long *nextr);
+    float trig_rand(u_long *nextr, bool sin);
 };
 
 #endif  // INCLUDE_RVS_BLAS_H_

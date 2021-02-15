@@ -99,7 +99,8 @@ class gst_action: public rvs::actionbase {
     int      gst_lda_offset;
     int      gst_ldb_offset;
     int      gst_ldc_offset;
-
+    //init matrix data
+    bool      gst_trig_init;
     // GST specific config keys
 //     void property_get_gst_target_stress(int *error);
 //     void property_get_gst_tolerance(int *error);
